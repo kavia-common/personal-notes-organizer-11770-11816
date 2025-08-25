@@ -1,15 +1,22 @@
 /**
- * WHAT IS THIS FILE?
- *
- * Globally applied styles for the ultralight Qwik template.
- * Uses a minimalistic light theme with specified color scheme.
+ * Global styles for the notes app.
+ * Minimalistic, light theme with specified color palette.
  */
 
 :root {
-  --primary-color: #000000;
-  --secondary-color: #333333;
-  --accent-color: #0078d4;
-  --background-color: #ffffff;
+  --color-primary: #4f46e5;   /* indigo-600 */
+  --color-secondary: #6d28d9; /* purple-700 */
+  --color-accent: #f59e42;    /* accent orange */
+  --color-bg: #ffffff;
+  --color-surface: #f8f9ff;
+  --color-border: #e5e7eb;
+  --color-text: #0f172a;
+  --color-text-muted: #475569;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 2px 8px rgba(0,0,0,0.08);
 }
 
 html {
@@ -26,16 +33,250 @@ html {
     Arial,
     "Noto Sans",
     sans-serif;
+  color-scheme: light;
 }
 
 body {
   margin: 0;
   padding: 0;
-  background-color: var(--background-color);
-  color: var(--primary-color);
-  line-height: inherit;
+  background-color: var(--color-bg);
+  color: var(--color-text);
 }
 
 * {
   box-sizing: border-box;
+}
+
+/* App layout */
+.app {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  min-height: 100vh;
+}
+
+@media (max-width: 900px) {
+  .app {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+  }
+}
+
+/* Sidebar */
+.sidebar {
+  border-right: 1px solid var(--color-border);
+  background: linear-gradient(180deg, #ffffff, var(--color-surface));
+  padding: 16px;
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-badge {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  box-shadow: var(--shadow-sm);
+}
+
+.brand-title {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.new-btn {
+  appearance: none;
+  border: none;
+  background: var(--color-primary);
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.05s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+.new-btn:hover { background: #4338ca; }
+.new-btn:active { transform: translateY(1px); }
+
+/* Search */
+.search {
+  position: relative;
+  margin: 12px 0 8px;
+}
+.search input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  background: #fff;
+  outline: none;
+  font-size: 14px;
+}
+.search input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(79,70,229,0.12);
+}
+
+/* Notes list */
+.note-list {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.note-item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  background: #fff;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.05s ease;
+}
+.note-item:hover {
+  border-color: #d1d5db;
+}
+.note-item.active {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(79,70,229,0.12);
+}
+.note-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.note-meta {
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+/* Editor */
+.editor {
+  padding: 20px 28px;
+}
+@media (max-width: 900px) {
+  .sidebar { grid-row: 1; }
+  .editor { grid-row: 2; padding: 16px; }
+}
+
+.editor-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.title-input {
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 20px;
+  font-weight: 600;
+  outline: none;
+  background: #fff;
+  border: 1px solid var(--color-border);
+}
+.title-input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(79,70,229,0.12);
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn {
+  appearance: none;
+  border: 1px solid var(--color-border);
+  background: #fff;
+  color: var(--color-text);
+  padding: 8px 10px;
+  border-radius: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.05s ease, box-shadow 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+.btn:hover { border-color: #d1d5db; }
+.btn:active { transform: translateY(1px); }
+.btn.primary {
+  background: var(--color-primary);
+  color: #fff;
+  border-color: var(--color-primary);
+}
+.btn.secondary {
+  background: var(--color-secondary);
+  color: #fff;
+  border-color: var(--color-secondary);
+}
+.btn.accent {
+  background: var(--color-accent);
+  color: #111827;
+  border-color: var(--color-accent);
+}
+
+.content-input {
+  width: 100%;
+  min-height: calc(100vh - 220px);
+  resize: vertical;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 14px;
+  font-size: 15px;
+  line-height: 1.6;
+  outline: none;
+  background: #fff;
+}
+.content-input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(79,70,229,0.12);
+}
+
+/* Empty state */
+.empty {
+  margin-top: 20vh;
+  text-align: center;
+  color: var(--color-text-muted);
+}
+.empty .cta {
+  margin-top: 12px;
+}
+
+/* Small utility */
+.row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.badge {
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  color: #111827;
+  background: linear-gradient(90deg, var(--color-accent), #ffd19a);
 }
